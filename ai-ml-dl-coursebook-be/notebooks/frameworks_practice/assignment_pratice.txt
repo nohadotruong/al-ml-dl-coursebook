@@ -1,0 +1,118 @@
+Perfect! Here’s a **list of beginner-friendly Scikit-learn assignments** you can do step by step. Each assignment is self-contained and lets you practice **the full ML workflow** (EDA → preprocessing → modeling → evaluation) without showing answers.
+
+---
+
+## **Assignment 1: Regression — Predict House Prices**
+
+**Dataset:** `California Housing` (sklearn.datasets.fetch_california_housing)
+
+**Tasks:**
+
+1. Load the dataset and explore: check shapes, types, missing values.
+2. Visualize distribution of target (`MedHouseVal`) and key features.
+3. Check correlations between numeric features and target.
+4. Split data into train/test.
+5. Baseline: `DummyRegressor(strategy="mean")`.
+6. Train Linear Regression and Ridge Regression.
+7. Evaluate using MAE, RMSE, and R².
+8. Compare baseline vs models and visualize predictions vs actual values.
+9. Optional: feature engineering (e.g., combine features).
+
+---
+
+## **Assignment 2: Classification — Iris Flower Species**
+
+**Dataset:** `sklearn.datasets.load_iris`
+
+**Tasks:**
+
+1. Explore the dataset: check feature distributions, class balance.
+2. Visualize scatter plots of two features colored by species.
+3. Split into train/test (stratified).
+4. Baseline: `DummyClassifier(strategy="most_frequent")`.
+5. Train Logistic Regression and KNN.
+6. Evaluate using Accuracy, Precision, Recall, F1-score.
+7. Compare baseline vs real models.
+8. Optional: try Random Forest and compare performance.
+
+---
+
+## **Assignment 3: Classification with Imbalanced Data — Titanic Survival**
+
+**Dataset:** Kaggle Titanic dataset (`train.csv`)
+
+**Tasks:**
+
+1. Load dataset and check for missing values.
+2. Handle missing values and encode categorical features.
+3. Explore class imbalance in `Survived`.
+4. Split into train/test (stratified).
+5. Baseline: `DummyClassifier(strategy="most_frequent")`.
+6. Train Decision Tree and Logistic Regression.
+7. Evaluate using Accuracy, Precision, Recall, F1-score.
+8. Compare baseline vs real models.
+9. Optional: Try SMOTE oversampling for imbalanced data and see performance change.
+
+---
+
+## **Assignment 4: Regression — Predict Student Scores**
+
+**Dataset:** Create a synthetic dataset:
+
+```python
+import numpy as np
+X = np.random.randint(0, 10, size=(100, 1))  # hours studied
+y = 5 * X.flatten() + np.random.randint(-5, 5, size=100)  # score
+```
+
+**Tasks:**
+
+1. Visualize X vs Y.
+2. Split into train/test.
+3. Baseline: `DummyRegressor(strategy="mean")`.
+4. Train Linear Regression and Lasso Regression.
+5. Evaluate MAE, RMSE, R².
+6. Plot predicted vs actual.
+
+---
+
+## **Assignment 5: Clustering — Customer Segmentation**
+
+**Dataset:** Synthetic dataset:
+
+```python
+from sklearn.datasets import make_blobs
+X, y_true = make_blobs(n_samples=200, centers=3, cluster_std=1.0, random_state=42)
+```
+
+**Tasks:**
+
+1. Visualize the clusters in 2D.
+2. Fit KMeans with different numbers of clusters.
+3. Evaluate using Silhouette Score.
+4. Plot the clusters found by KMeans.
+5. Compare predicted clusters with original `y_true`.
+
+---
+
+## **Assignment 6: Dimensionality Reduction — PCA on Wine Dataset**
+
+**Dataset:** `sklearn.datasets.load_wine`
+
+**Tasks:**
+
+1. Explore dataset: feature distributions, class balance.
+2. Scale numeric features (StandardScaler).
+3. Apply PCA to reduce features to 2D.
+4. Visualize 2D scatterplot colored by class.
+5. Optional: Train a Logistic Regression on PCA-transformed features and compare accuracy to full feature model.
+
+---
+
+These assignments cover **regression, classification, clustering, preprocessing, evaluation, and baseline comparisons**.
+
+---
+
+If you want, I can **create a “step-by-step practice roadmap”** with **1 assignment per week**, gradually increasing difficulty, so you can really build skills from beginner → intermediate in scikit-learn.
+
+Do you want me to do that?

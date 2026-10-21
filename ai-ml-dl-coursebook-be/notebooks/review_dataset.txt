@@ -1,0 +1,133 @@
+Step 1: Overview / Explore Dataset
+----------------------------------
+df.shape          # Number of rows and columns
+df.columns        # Column names
+df.dtypes         # Column data types
+df.info()         # Overview of dataset + missing values
+df.describe()     # Basic statistics for numeric features
+
+# Count and percentage of missing values
+null_counts = df.isnull().sum()
+null_percentage = (null_counts / len(df)) * 100
+null_summary = df.isnull().sum().to_frame(name='Null Count')
+null_summary['Null %'] = null_percentage
+print(f"- Missing values per column:\n{null_summary}")
+
+Requirements / Conclusions:
+- How many numerical vs categorical features?
+- How many missing values? What percentage?
+- Decide if you need to drop / impute / scale / encode:
+
+Data cleaning / preprocessing:
+1. Drop – Delete unnecessary or unclean columns or rows:
+   - Column has a high percentage of missing values
+   - Column does not affect the problem
+
+    df = df.drop(['PassengerId', 'Cabin'], axis=1)
+    df = df.drop_duplicates()
+
+2. Impute – Fill missing values for important columns:
+   - Numerical: median, mean, or predict using a model
+   - Categorical: mode (most frequent value)
+
+   # Age numeric
+    df['Age'] = df['Age'].fillna(df['Age'].median())
+
+    # Embarked categorical
+    df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+
+3. Scale – Standardize values to a common range:
+   - StandardScaler (z-score): (x - mean) / std → mean 0, std 1
+   - MinMaxScaler: scale values to 0–1
+
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    df['Age_scaled'] = scaler.fit_transform(df[['Age']])
+
+4. Encode – Convert categorical features to numerical:
+   - OneHotEncoder: create a column for each category
+   - LabelEncoder: assign 0,1,2… for categories (useful for tree-based models)
+
+    from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+    # LabelEncoder
+    le = LabelEncoder()
+    df['Sex_encoded'] = le.fit_transform(df['Sex'])
+
+    # OneHotEncoder
+    ohe = OneHotEncoder(sparse=False)
+    sex_ohe = ohe.fit_transform(df[['Sex']])
+
+- Are the number of rows sufficient for the task?
+
+Step 2: Target (Label) Exploration
+----------------------------------
+y.value_counts()             # Count of each class
+y.value_counts(normalize=True)  # Percent of each class
+
+Requirements / Conclusions:
+- Is it classification or regression?
+- If classification, is the dataset balanced or imbalanced?
+- Choose suitable metrics: Accuracy / F1 / RMSE / R²
+
+Step 3: Feature Exploration
+---------------------------
+3a. Numerical Features
+numeric_cols = df.select_dtypes(include=['int64','float64']).columns
+print(df[numeric_cols].describe())
+
+# Visual inspection
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.histplot(df['Age'], kde=True)
+sns.boxplot(x=df['Fare'])
+
+Conclusions:
+- Are the distributions skewed? Are there outliers?
+- Do we need scaling or transformation?
+- Correlation with the target:
+df.corr()['Survived']
+
+3b. Categorical Features
+cat_cols = df.select_dtypes(include=['object']).columns
+for col in cat_cols:
+    print(df[col].value_counts())
+    sns.countplot(x=df[col])
+    plt.show()
+
+Conclusions:
+- Are there rare categories?
+- Are there missing values → need imputation?
+- Need to encode these features?
+
+Step 4: Check Missing & Duplicates
+----------------------------------
+print(df.isna().sum())        # Count missing values
+print(df.duplicated().sum())  # Count duplicates
+
+Conclusions:
+- Lots of missing values → drop or impute
+- Duplicates → drop
+
+Step 5: Check Feature-Label Relationships
+-----------------------------------------
+- Numerical vs label → boxplot / scatter / correlation
+- Categorical vs label → groupby + mean / countplot / crosstab
+
+# Categorical vs label
+print(df.groupby('Sex')['Survived'].mean())
+
+# Numerical vs label
+sns.boxplot(x='Survived', y='Age', data=df)
+
+Conclusions:
+- Which features affect the target the most → Important for modeling
+
+Step 6: Data Processing Notes
+-----------------------------
+- Drop unnecessary columns
+- Impute missing values
+- Encode categorical features
+- Scale numerical features
+- Feature engineering (create new meaningful features)

@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+button,
+img,
+select,
+a {
+  cursor: pointer;
+}
+
+* {
+  /* border: 1px solid red; */
+  box-sizing: border-box;
+}
+
+.font-gamja-flower {
+  font-family: "Gamja Flower";
+}
+
+html {
+  scroll-behavior: smooth;
+}
